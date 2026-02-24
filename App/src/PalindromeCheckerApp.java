@@ -1,23 +1,17 @@
-import java.util.LinkedList;
-import java.util.ListIterator;
 public class PalindromeCheckerApp {
+    public static boolean isPalindrome(String str, int start, int end) {
+        if (start >= end) {
+            return true;
+        }
+        if (str.charAt(start) != str.charAt(end)) {
+            return false;
+        }
+        return isPalindrome(str, start + 1, end - 1);
+    }
     public static void main(String[] args) {
-        String input = "level";
-        LinkedList<Character> list = new LinkedList<>();
-        for (char c : input.toCharArray()) {
-            list.add(c); // add to the rear
-        }
-        boolean isPalindrome = true;
-        int n = list.size();
-        while (list.size() > 1) {
-            char front = list.removeFirst();
-            char rear = list.removeLast();
-            if (front != rear) {
-                isPalindrome = false;
-                break;
-            }
-        }
-        System.out.println("Input:" +input);
-        System.out.println("Is it a palindrome? " + isPalindrome);
+        String input = "racecar";
+        boolean result = isPalindrome(input, 0, input.length() - 1);
+        System.out.println("Input: " + input);
+        System.out.println("Is it a palindrome? " + result);
     }
 }
