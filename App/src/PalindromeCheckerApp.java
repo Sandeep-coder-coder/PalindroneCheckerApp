@@ -43,11 +43,28 @@ public class PalindromeCheckerApp {
         }
     }
     public static void main(String[] args) {
-        String input = "racecar";
-        PalindromeStrategy strategy = new StackStrategy();
-        PalindromeChecker checker = new PalindromeChecker(strategy);
-        boolean result = checker.checkPalindrome(input);
+        String input = "level";
         System.out.println("Input: " + input);
-        System.out.println("Is it a palindrome? " + result);
+        PalindromeStrategy stackStrategy = new StackStrategy();
+        PalindromeChecker stackChecker = new PalindromeChecker(stackStrategy);
+        long startStack = System.nanoTime();
+        boolean stackResult = stackChecker.checkPalindrome(input);
+        long endStack = System.nanoTime();
+        long stackTime = endStack - startStack;
+        System.out.println("Stack Result: " + stackResult);
+        System.out.println("Stack Execution Time: " + stackTime + " ns");
+        System.out.println("--------------------------------");
+
+        PalindromeStrategy dequeStrategy = new DequeStrategy();
+        PalindromeChecker dequeChecker = new PalindromeChecker(dequeStrategy);
+
+        long startDeque = System.nanoTime();
+        boolean dequeResult = dequeChecker.checkPalindrome(input);
+        long endDeque = System.nanoTime();
+
+        long dequeTime = endDeque - startDeque;
+
+        System.out.println("Deque Result: " + dequeResult);
+        System.out.println("Deque Execution Time: " + dequeTime + " ns");
     }
 }
