@@ -9,8 +9,10 @@ public class PalindromeCheckerApp {
         return isPalindrome(str, start + 1, end - 1);
     }
     public static void main(String[] args) {
-        String input = "racecar";
-        boolean result = isPalindrome(input, 0, input.length() - 1);
+        String input = "A man a plan a canal Panama";
+        String normalized = input.toLowerCase().replaceAll("\\s+", "");
+        boolean result = isPalindrome(normalized, 0, normalized.length() - 1);
+
         System.out.println("Input: " + input);
         System.out.println("Is it a palindrome? " + result);
     }
