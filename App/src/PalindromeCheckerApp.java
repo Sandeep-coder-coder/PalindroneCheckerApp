@@ -1,29 +1,53 @@
+import java.util.*;
 public class PalindromeCheckerApp {
+    interface PalindromeStrategy {
+        boolean check(String input);
+    }
+    static class StackStrategy implements PalindromeStrategy {
+        public boolean check(String input) {
+            Stack<Character> stack = new Stack<>();
+            for (char c : input.toCharArray()) {
+                stack.push(c);
+            }
+            for (char c : input.toCharArray()) {
+                if (c != stack.pop()) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+    static class DequeStrategy implements PalindromeStrategy {
+        public boolean check(String input) {
+            Deque<Character> deque = new ArrayDeque<>();
+            for (char c : input.toCharArray()) {
+                deque.addLast(c);
+            }
+            while (deque.size() > 1) {
+                if (deque.removeFirst() != deque.removeLast()) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
     static class PalindromeChecker {
+        private PalindromeStrategy strategy;
+        public PalindromeChecker(PalindromeStrategy strategy) {
+            this.strategy = strategy;
+        }
         public boolean checkPalindrome(String input) {
-            if (input == null) {
-                return false;
-            }
+            if (input == null) return false;
             String normalized = input.toLowerCase().replaceAll("\\s+", "");
-            return isPalindrome(normalized, 0, normalized.length() - 1);
+            return strategy.check(normalized);
         }
-
-        public static boolean isPalindrome(String str, int start, int end) {
-            if (start >= end) {
-                return true;
-            }
-            if (str.charAt(start) != str.charAt(end)) {
-                return false;
-            }
-            return isPalindrome(str, start + 1, end - 1);
-        }
-
-        public static void main(String[] args) {
-            String input = "racecar";
-            PalindromeChecker checker = new PalindromeChecker();
-            boolean result = checker.checkPalindrome(input);
-            System.out.println("Input: " + input);
-            System.out.println("Is it a palindrome? " + result);
-        }
+    }
+    public static void main(String[] args) {
+        String input = "racecar";
+        PalindromeStrategy strategy = new StackStrategy();
+        PalindromeChecker checker = new PalindromeChecker(strategy);
+        boolean result = checker.checkPalindrome(input);
+        System.out.println("Input: " + input);
+        System.out.println("Is it a palindrome? " + result);
     }
 }
